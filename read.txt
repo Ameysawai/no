@@ -1,0 +1,457 @@
+//A program to calculate the factorial of a given number.
+fun main(){
+    println(factorial(4))
+}
+fun factorial(a:Int):Int{
+    var result:Int
+    if(a<=1){
+        result = 1
+    }
+    else{
+        result = a*factorial(a-1)
+    } 
+    return result
+}
+
+//A program that uses map and filter functions on a list of strings.
+fun main() {
+    val names = listOf("Alice", "Bob", "Charlie", "David", "Eve")
+    val uppercaseNames = names.map { it.toUpperCase() }
+    println("Uppercase names: $uppercaseNames")
+    val longNames = names.filter { it.length > 4 }
+    println("Long names: $longNames")
+}
+
+
+
+
+//A program that checks if a user-inputted string is a palindrome.
+fun main() {
+    println("Enter a string:")
+    val input = readLine()?.trim()
+
+    if (isPalindrome(input)) {
+        println("The string is a palindrome.")
+    } else {
+        println("The string is not a palindrome.")
+    }
+}
+
+fun isPalindrome(input: String?): Boolean {
+    if (input == null) return false
+
+    val normalizedInput = input.toLowerCase().replace(Regex("[^a-zA-Z0-9]"), "")
+    val reversedInput = normalizedInput.reversed()
+
+    return normalizedInput == reversedInput
+}
+//An extension function for the List<Int> class that calculates and returns the average of the list elements.
+
+fun List<Int>.average() : Double{
+    if(isEmpty()){
+        return 0.0
+    }
+
+    var sum = this.sum()
+    var result = sum.toDouble()/size
+
+    return result
+}
+
+fun main(){
+    var arr = listOf(1,23,4,7,8)
+    var result = arr.average()
+
+    println(result)
+}
+
+//A program that implements a Student class with properties: name, age, and grades.
+class Student(val name: String, val age: Int, val grades: List<Int>) {
+    fun calculateAverageGrade(): Double {
+        if (grades.isEmpty()) {
+            return 0.0
+        }
+
+        val sum = grades.sum()
+        return sum.toDouble() / grades.size
+    }
+}
+
+fun main() {
+    val student1 = Student("Alice", 20, listOf(85, 90, 92, 88, 95))
+    val student2 = Student("Bob", 19, listOf(78, 82, 80, 85, 88))
+
+    println("${student1.name} is ${student1.age} years old.")
+    println("Grades: ${student1.grades}")
+    val average1 = student1.calculateAverageGrade()
+    println("Average Grade: $average1")
+
+    println("${student2.name} is ${student2.age} years old.")
+    println("Grades: ${student2.grades}")
+    val average2 = student2.calculateAverageGrade()
+    println("Average Grade: $average2")
+}
+
+//A program that converts the Student class into a data class. –Nikhil 
+data class Student(val name:String, val age:Int, val grades:List<Int>){
+    fun calAverage():Double {
+        if(grades.isEmpty()){
+            return 0.0
+        }
+        var sum = grades.sum()
+        var result = sum.toDouble()/grades.size
+
+        return result
+    }
+}
+
+fun main(){
+    var student1 = Student("Ashish", 23, listOf(96,95,82,91))
+
+    println("${student1.name}")
+    println("${student1.age}")
+    println("Average Marks: ${student1.calAverage()}")
+
+    var student2 = student1.copy(name = "Ayush")
+    println(student2)
+}
+
+
+//A program that uses lambda expressions and higher-order functions to find the maximum value in a list of integers.
+
+fun main() {
+    val numbers = listOf(10, 5, 8, 3, 15, 12)
+
+    val maxNumber = findMax(numbers)
+    println("The maximum number is: $maxNumber")
+}
+
+fun findMax(numbers: List<Int>): Int? {
+    if (numbers.isEmpty()) {
+        return null
+    }
+
+    return numbers.maxByOrNull { it }
+}
+
+Optimised code:
+fun main() {
+    val numbers = listOf(10, 5, 8, 3, 15, 12)
+    println("The maximum number is: ${numbers.maxByOrNull { it }}")
+}
+
+//A program that implements a Shape interface with two classes, Circle and Rectangle, that implement the Shape interface.
+interface Shape{
+    fun Area():Double
+    fun Perimeter():Double
+}
+
+class Circle(val redii : Double):Shape{
+    override fun Area():Double {
+        return 3.14*redii*redii
+    }
+    override fun Perimeter():Double{
+        return 2*3.14*redii
+    }
+}
+
+class Square(val width : Double, val height: Double):Shape{
+    override fun Area():Double {
+        return width*height
+    }
+    override fun Perimeter():Double{
+        return 2*(width + height)
+    }
+}
+
+fun main(){
+    val circle = Circle(5.0)
+    val Rectangle = Rectangle(4.0, 5.0)
+
+    println("Area of circle: ${circle.Area()}")
+    println("Area of square: ${rectangle.Area()}")
+}
+
+//API
+
+import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
+
+suspend fun fetchFromApi1(): String {
+    delay(2000L)  // Simulating network request
+    return "Data from API1"
+}
+
+suspend fun fetchFromApi2(): String {
+    delay(3000L)  // Simulating network request
+    return "Data from API2"
+}
+
+fun main() = runBlocking {
+
+    val time = measureTimeMillis {
+        val result1 = async { fetchFromApi1() }
+        val result2 = async { fetchFromApi2() }
+        println("Result1: ${result1.await()}")
+        println("Result2: ${result2.await()}")
+    }
+    println("Completed in $time ms")
+}
+
+// An extension function for the String class that returns the number of vowels in the string.
+fun String.countVowel():Int{
+    val vowels = setOf('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+    var count = 0
+    for(char in this){
+        if(char in vowels)
+        {
+            count++
+        }
+    }
+    return count
+}
+
+fun main(){
+    var s = "Hello world in this sentence"
+
+    var result = s.countVowel()
+
+    println(result)
+}
+// A program to generate a list of the first n Fibonacci numbers, where n is a user input. – Nikhil
+fun main() {
+    println("Enter the value of n:")
+    val n = readLine()?.toIntOrNull()
+
+    if (n != null && n > 0) {
+        val fibonacciNumbers = generateFibonacciNumbers(n)
+        println("The first $n Fibonacci numbers are:")
+        fibonacciNumbers.forEach { println(it) }
+    } else {
+        println("Invalid input. Please enter a positive integer.")
+    }
+}		
+
+fun generateFibonacciNumbers(n: Int): List<Int> {
+    val fibonacciNumbers = mutableListOf<Int>()
+
+    if (n >= 1) {
+        fibonacciNumbers.add(0)
+    }
+    if (n >= 2) {
+        fibonacciNumbers.add(1)
+    }
+
+    for (i in 2 until n) {
+        val nextFibonacciNumber = fibonacciNumbers[i - 1] + fibonacciNumbers[i - 2]
+        fibonacciNumbers.add(nextFibonacciNumber)
+    }
+
+    return fibonacciNumbers
+}
+// A function that takes two integer arrays as arguments and returns a new array that contains the intersection of the two input arrays.
+fun Intersect(arr1:Array<Int>, arr2:Array<Int>):Array<Int>{
+    var set1 = arr1.toSet()
+    var set2 = arr2.toSet()
+
+    return set1.intersect(set2).toTypedArray()
+}
+
+fun main(){
+    var arr1 = arrayOf(2,4,6,4,5,2,7,8,4,5,7,67,1)
+    var arr2 = arrayOf(4,6,7,8,34,23,21,2,4,5,6,4,4,3)
+
+    var result = Intersect(arr1, arr2)
+    println(result.contentToString())
+}
+// A program that creates a Person class with properties: firstName, lastName, and age.  Nikhil 
+class Person(val firstName: String, val lastName: String, val age: Int)
+
+fun main() {
+    val person = Person("John", "Doe", 25)
+
+    println("Name: ${person.firstName} ${person.lastName}")
+    println("Age: ${person.age}")
+}
+// A program that creates a sealed class named Result and two subclasses Success and Failure.
+sealed class Result(){
+    data class Success(val message:String): Result()
+    data class Failure(val error:String): Result()
+}
+
+fun processResult(result: Result){
+    when(result){
+        is Result.Success -> {
+            println("Success : ${result.message}")
+        }
+        is Result.Failure -> {
+            println("Failure : ${result.error}")
+        }
+    }
+}
+
+fun main(){
+    var successMessage = Result.Success("Operation Successful")
+    var errorMessage = Result.Failure("Error Occured")
+
+    processResult(successMessage)
+    processResult(errorMessage)
+}
+// A program that uses anonymous functions and higher-order functions to calculate the sum of all even numbers in a list of integers.
+fun main() {
+    val numbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val evenSum = calculateEvenSum(numbers)
+    println("Sum of even numbers: $evenSum")
+}
+fun calculateEvenSum(numbers: List<Int>): Int {
+    val evenNumbers = numbers.filter{ x -> x%2 == 0}
+    return evenNumbers.sum()
+}
+
+// A program that creates an abstract class Vehicle with two subclasses: Car and Motorcycle.
+abstract class Vehicle(val brand:String, val colour:String){
+    abstract fun Start()
+}
+
+class Bike(brand: String, colour: String): Vehicle(brand, colour)
+{
+    override fun Start(){
+        println("Starting Bike of brand: $brand and color: $colour")
+    }
+}
+
+class Car(brand: String, colour: String): Vehicle(brand, colour)
+{
+    override fun Start(){
+        println("Starting can of brand: $brand, of colour: $colour")
+    }
+}
+
+fun main(){
+    var bike1 = Bike("yamaha", "black")
+    var car1 = Car("Honda", "white")
+
+    car1.Start()
+    bike1.Start()
+}
+
+A program that demonstrates the use of let, with, run, apply, and also functions in Kotlin.
+fun main() {
+    var s = "         Hello!!"
+    println("String: $s")
+    var r = s.let{ it.trim()}
+        .also{println("after let: $it")}
+        .run{this + "!"}
+        .also{println("after run: $it")}
+        .apply{println("after apply: $this")}
+}
+data class Person(var name: String, var age: Int)
+
+fun main() {
+
+    val s = "Hello, Kotlin!"
+    val result = s.let {
+        println(it)
+        it.length
+    }
+    println("Result: $result")
+}
+
+    val person = Person("John Doe", 30)
+    with(person) {
+        println("Name: $name")
+        println("Age: $age")
+    }
+
+  
+    val numberList = mutableListOf(1, 2, 3)
+    val newList = numberList.run {
+        add(4)
+        add(5)
+        shuffle()
+        this
+    }
+    println("New List: $newList")
+
+  
+    val person2 = Person("Jane Smith", 25)
+    person2.apply {
+        age = 26
+    }
+    println("Modified Person: $person2")
+
+   
+    val number = 42
+    number.also {
+        println("Original Number: $it")
+        println("Squared Number: ${it * it}")
+    }
+}
+// A program to read a text file, count the frequency of each word, and save the results in a new text file.  – 
+import java.io.File
+
+fun main(){
+    var file = File("input.txt")
+    file.writeText("The quick brown fox jumped over the lazy dog.\nThe brown fox is now sad that the lazy dog is now asleep.")
+    println("Content of input file: " + file.readText())
+    var count:Int = 1
+    for(whitespace in file.readText()){
+        if(whitespace.equals(' ') or whitespace.equals('\n') or whitespace.equals('\t')){
+            count++
+        }
+    }
+    var words = count
+    println(count)
+    var outputFile = File("output.txt")
+    outputFile.writeText("Number of words: $words")
+    println(outputFile.readText())
+}
+
+
+//A program to find the GCD of two given numbers using the Euclidean algorithm.
+fun main() {
+    val number1 = 48
+    val number2 = 18
+
+    val gcd = findGCD(number1, number2)
+    println("GCD of $number1 and $number2 is: $gcd")
+}
+
+fun findGCD(a: Int, b: Int): Int {
+    var num1 = a
+    var num2 = b
+
+    // Ensure positive numbers for the algorithm
+    if (num1 < 0) num1 = -num1
+    if (num2 < 0) num2 = -num2
+
+    while (num2 != 0) {
+        val remainder = num1 % num2
+        num1 = num2
+        num2 = remainder
+    }
+
+    return num1
+}
+
+
+//A program that demonstrates the use of Kotlin Flow to emit a sequence of integers and perform a transformation on each emitted value.
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+
+fun main() = runBlocking {
+    val numbersFlow: Flow<Int> = generateNumbersFlow(1, 10)
+
+    numbersFlow
+        .map { it * 2 } // Transformation: Multiply each value by 2
+        .map { it.toString() } // Transformation: Convert each value to a string
+        .collect { println(it) }
+}
+
+fun generateNumbersFlow(start: Int, end: Int): Flow<Int> = flow {
+    for (i in start..end) {
+        emit(i)
+    }
+}
