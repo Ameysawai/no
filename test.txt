@@ -1,0 +1,19 @@
+fun main() {
+    println("Enter a string:")
+    val input = readLine()?.trim()
+
+    if (isPalindrome(input)) {
+        println("The string is a palindrome.")
+    } else {
+        println("The string is not a palindrome.")
+    }
+}
+
+fun isPalindrome(input: String?): Boolean {
+    if (input == null) return false
+
+    val normalizedInput = input.toLowerCase().replace(Regex("[^a-zA-Z0-9]"), "")
+    val reversedInput = normalizedInput.reversed()
+
+    return normalizedInput == reversedInput
+}
