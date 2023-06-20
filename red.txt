@@ -1,0 +1,598 @@
+//A program to calculate the factorial of a given number.
+fun main(){
+    println(factorial(4))
+}
+fun factorial(a:Int):Int{
+    var result:Int
+    if(a<=1){
+        result = 1
+    }
+    else{
+        result = a*factorial(a-1)
+    } 
+    return result
+}
+
+//A program that uses map and filter functions on a list of strings.
+fun main() {
+    val names = listOf("Alice", "Bob", "Charlie", "David", "Eve")
+    val uppercaseNames = names.map { it.toUpperCase() }
+    println("Uppercase names: $uppercaseNames")
+    val longNames = names.filter { it.length > 4 }
+    println("Long names: $longNames")
+}
+
+//A program that checks if a user-inputted string is a palindrome.
+fun main() {
+    println("Enter a string:")
+    val input = readLine()?.trim()
+
+    if (isPalindrome(input)) {
+        println("The string is a palindrome.")
+    } else {
+        println("The string is not a palindrome.")
+    }
+}
+
+fun isPalindrome(input: String?): Boolean {
+    if (input == null) return false
+
+    val normalizedInput = input.toLowerCase().replace(Regex("[^a-zA-Z0-9]"), "")
+    val reversedInput = normalizedInput.reversed()
+
+    return normalizedInput == reversedInput
+}
+//An extension function for the List<Int> class that calculates and returns the average of the list elements.
+
+fun List<Int>.average() : Double{
+    if(isEmpty()){
+        return 0.0
+    }
+
+    var sum = this.sum()
+    var result = sum.toDouble()/size
+
+    return result
+}
+
+fun main(){
+    var arr = listOf(1,23,4,7,8)
+    var result = arr.average()
+
+    println(result)
+}
+
+//A program that implements a Student class with properties: name, age, and grades.
+class Student(val name: String, val age: Int, val grades: List<Int>) {
+    fun calculateAverageGrade(): Double {
+        if (grades.isEmpty()) {
+            return 0.0
+        }
+
+        val sum = grades.sum()
+        return sum.toDouble() / grades.size
+    }
+}
+
+fun main() {
+    val student1 = Student("Alice", 20, listOf(85, 90, 92, 88, 95))
+    val student2 = Student("Bob", 19, listOf(78, 82, 80, 85, 88))
+
+    println("${student1.name} is ${student1.age} years old.")
+    println("Grades: ${student1.grades}")
+    val average1 = student1.calculateAverageGrade()
+    println("Average Grade: $average1")
+
+    println("${student2.name} is ${student2.age} years old.")
+    println("Grades: ${student2.grades}")
+    val average2 = student2.calculateAverageGrade()
+    println("Average Grade: $average2")
+}
+
+//A program that converts the Student class into a data class. –Nikhil 
+data class Student(val name:String, val age:Int, val grades:List<Int>){
+    fun calAverage():Double {
+        if(grades.isEmpty()){
+            return 0.0
+        }
+        var sum = grades.sum()
+        var result = sum.toDouble()/grades.size
+
+        return result
+    }
+}
+
+fun main(){
+    var student1 = Student("Ashish", 23, listOf(96,95,82,91))
+
+    println("${student1.name}")
+    println("${student1.age}")
+    println("Average Marks: ${student1.calAverage()}")
+
+    var student2 = student1.copy(name = "Ayush")
+    println(student2)
+}
+
+
+//A program that uses lambda expressions and higher-order functions to find the maximum value in a list of integers.
+
+fun main() {
+    val numbers = listOf(10, 5, 8, 3, 15, 12)
+
+    val maxNumber = findMax(numbers)
+    println("The maximum number is: $maxNumber")
+}
+
+fun findMax(numbers: List<Int>): Int? {
+    if (numbers.isEmpty()) {
+        return null
+    }
+
+    return numbers.maxByOrNull { it }
+}
+
+Optimised code:
+fun main() {
+    val numbers = listOf(10, 5, 8, 3, 15, 12)
+    println("The maximum number is: ${numbers.maxByOrNull { it }}")
+}
+
+//A program that implements a Shape interface with two classes, Circle and Rectangle, that implement the Shape interface.
+interface Shape{
+    fun Area():Double
+    fun Perimeter():Double
+}
+
+class Circle(val redii : Double):Shape{
+    override fun Area():Double {
+        return 3.14*redii*redii
+    }
+    override fun Perimeter():Double{
+        return 2*3.14*redii
+    }
+}
+
+class Square(val width : Double, val height: Double):Shape{
+    override fun Area():Double {
+        return width*height
+    }
+    override fun Perimeter():Double{
+        return 2*(width + height)
+    }
+}
+
+fun main(){
+    val circle = Circle(5.0)
+    val Rectangle = Rectangle(4.0, 5.0)
+
+    println("Area of circle: ${circle.Area()}")
+    println("Area of square: ${rectangle.Area()}")
+}
+
+//API
+
+import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
+
+suspend fun fetchFromApi1(): String {
+    delay(2000L)  // Simulating network request
+    return "Data from API1"
+}
+
+suspend fun fetchFromApi2(): String {
+    delay(3000L)  // Simulating network request
+    return "Data from API2"
+}
+
+fun main() = runBlocking {
+
+    val time = measureTimeMillis {
+        val result1 = async { fetchFromApi1() }
+        val result2 = async { fetchFromApi2() }
+        println("Result1: ${result1.await()}")
+        println("Result2: ${result2.await()}")
+    }
+    println("Completed in $time ms")
+}
+
+// An extension function for the String class that returns the number of vowels in the string.
+fun String.countVowel():Int{
+    val vowels = setOf('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+    var count = 0
+    for(char in this){
+        if(char in vowels)
+        {
+            count++
+        }
+    }
+    return count
+}
+
+fun main(){
+    var s = "Hello world in this sentence"
+
+    var result = s.countVowel()
+
+    println(result)
+}
+// A program to generate a list of the first n Fibonacci numbers, where n is a user input. – Nikhil
+fun main() {
+    println("Enter the value of n:")
+    val n = readLine()?.toIntOrNull()
+
+    if (n != null && n > 0) {
+        val fibonacciNumbers = generateFibonacciNumbers(n)
+        println("The first $n Fibonacci numbers are:")
+        fibonacciNumbers.forEach { println(it) }
+    } else {
+        println("Invalid input. Please enter a positive integer.")
+    }
+}		
+
+fun generateFibonacciNumbers(n: Int): List<Int> {
+    val fibonacciNumbers = mutableListOf<Int>()
+
+    if (n >= 1) {
+        fibonacciNumbers.add(0)
+    }
+    if (n >= 2) {
+        fibonacciNumbers.add(1)
+    }
+
+    for (i in 2 until n) {
+        val nextFibonacciNumber = fibonacciNumbers[i - 1] + fibonacciNumbers[i - 2]
+        fibonacciNumbers.add(nextFibonacciNumber)
+    }
+
+    return fibonacciNumbers
+}
+// A function that takes two integer arrays as arguments and returns a new array that contains the intersection of the two input arrays.
+fun Intersect(arr1:Array<Int>, arr2:Array<Int>):Array<Int>{
+    var set1 = arr1.toSet()
+    var set2 = arr2.toSet()
+
+    return set1.intersect(set2).toTypedArray()
+}
+
+fun main(){
+    var arr1 = arrayOf(2,4,6,4,5,2,7,8,4,5,7,67,1)
+    var arr2 = arrayOf(4,6,7,8,34,23,21,2,4,5,6,4,4,3)
+
+    var result = Intersect(arr1, arr2)
+    println(result.contentToString())
+}
+// A program that creates a Person class with properties: firstName, lastName, and age.  Nikhil 
+class Person(val firstName: String, val lastName: String, val age: Int)
+
+fun main() {
+    val person = Person("John", "Doe", 25)
+
+    println("Name: ${person.firstName} ${person.lastName}")
+    println("Age: ${person.age}")
+}
+// A program that creates a sealed class named Result and two subclasses Success and Failure.
+sealed class Result(){
+    data class Success(val message:String): Result()
+    data class Failure(val error:String): Result()
+}
+
+fun processResult(result: Result){
+    when(result){
+        is Result.Success -> {
+            println("Success : ${result.message}")
+        }
+        is Result.Failure -> {
+            println("Failure : ${result.error}")
+        }
+    }
+}
+
+fun main(){
+    var successMessage = Result.Success("Operation Successful")
+    var errorMessage = Result.Failure("Error Occured")
+
+    processResult(successMessage)
+    processResult(errorMessage)
+}
+// A program that uses anonymous functions and higher-order functions to calculate the sum of all even numbers in a list of integers.
+fun main() {
+    val numbers = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val evenSum = calculateEvenSum(numbers)
+    println("Sum of even numbers: $evenSum")
+}
+fun calculateEvenSum(numbers: List<Int>): Int {
+    val evenNumbers = numbers.filter{ x -> x%2 == 0}
+    return evenNumbers.sum()
+}
+
+// A program that creates an abstract class Vehicle with two subclasses: Car and Motorcycle.
+abstract class Vehicle(val brand:String, val colour:String){
+    abstract fun Start()
+}
+
+class Bike(brand: String, colour: String): Vehicle(brand, colour)
+{
+    override fun Start(){
+        println("Starting Bike of brand: $brand and color: $colour")
+    }
+}
+
+class Car(brand: String, colour: String): Vehicle(brand, colour)
+{
+    override fun Start(){
+        println("Starting can of brand: $brand, of colour: $colour")
+    }
+}
+
+fun main(){
+    var bike1 = Bike("yamaha", "black")
+    var car1 = Car("Honda", "white")
+
+    car1.Start()
+    bike1.Start()
+}
+
+A program that demonstrates the use of let, with, run, apply, and also functions in Kotlin.
+fun main() {
+    var s = "         Hello!!"
+    println("String: $s")
+    var r = s.let{ it.trim()}
+        .also{println("after let: $it")}
+        .run{this + "!"}
+        .also{println("after run: $it")}
+        .apply{println("after apply: $this")}
+}
+data class Person(var name: String, var age: Int)
+
+fun main() {
+
+    val s = "Hello, Kotlin!"
+    val result = s.let {
+        println(it)
+        it.length
+    }
+    println("Result: $result")
+}
+
+    val person = Person("John Doe", 30)
+    with(person) {
+        println("Name: $name")
+        println("Age: $age")
+    }
+
+  
+    val numberList = mutableListOf(1, 2, 3)
+    val newList = numberList.run {
+        add(4)
+        add(5)
+        shuffle()
+        this
+    }
+    println("New List: $newList")
+
+  
+    val person2 = Person("Jane Smith", 25)
+    person2.apply {
+        age = 26
+    }
+    println("Modified Person: $person2")
+
+   
+    val number = 42
+    number.also {
+        println("Original Number: $it")
+        println("Squared Number: ${it * it}")
+    }
+}
+// A program to read a text file, count the frequency of each word, and save the results in a new text file.  – 
+import java.io.File
+
+fun main(){
+    var file = File("input.txt")
+    file.writeText("The quick brown fox jumped over the lazy dog.\nThe brown fox is now sad that the lazy dog is now asleep.")
+    println("Content of input file: " + file.readText())
+    var count:Int = 1
+    for(whitespace in file.readText()){
+        if(whitespace.equals(' ') or whitespace.equals('\n') or whitespace.equals('\t')){
+            count++
+        }
+    }
+    var words = count
+    println(count)
+    var outputFile = File("output.txt")
+    outputFile.writeText("Number of words: $words")
+    println(outputFile.readText())
+}
+add text file 
+import java.io.File
+
+fun main() {
+    val fileName = "test.txt"
+    val words: List<String> = File(fileName).readText().split("\\s+".toRegex())
+
+    val frequencies = mutableMapOf<String, Int>()
+    words.forEach { word ->
+        val count = frequencies[word] ?: 0
+        frequencies[word] = count + 1
+    }
+
+    // Now you can access the frequency of any word
+    val appleFrequency = frequencies["apple"]
+
+    // Or print all word frequencies
+    frequencies.forEach { (word, frequency) ->
+        println("$word: $frequency")
+    }
+}
+
+
+//A program to find the GCD of two given numbers using the Euclidean algorithm.
+fun main() {
+    val number1 = 48
+    val number2 = 18
+
+    val gcd = findGCD(number1, number2)
+    println("GCD of $number1 and $number2 is: $gcd")
+}
+
+fun findGCD(a: Int, b: Int): Int {
+    var num1 = a
+    var num2 = b
+
+    // Ensure positive numbers for the algorithm
+    if (num1 < 0) num1 = -num1
+    if (num2 < 0) num2 = -num2
+
+    while (num2 != 0) {
+        val remainder = num1 % num2
+        num1 = num2
+        num2 = remainder
+    }
+
+    return num1
+}
+
+
+//A program that demonstrates the use of Kotlin Flow to emit a sequence of integers and perform a transformation on each emitted value.
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+
+fun main() = runBlocking {
+    val numbersFlow: Flow<Int> = generateNumbersFlow(1, 10)
+
+    numbersFlow
+        .map { it * 2 } // Transformation: Multiply each value by 2
+        .map { it.toString() } // Transformation: Convert each value to a string
+        .collect { println(it) }
+}
+
+fun generateNumbersFlow(start: Int, end: Int): Flow<Int> = flow {
+    for (i in start..end) {
+        emit(i)
+    }
+}
+//thrown exception
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    val job = launch {
+        try {
+            doSomething()
+        } catch (e: Exception) {
+            println("Caught $e")
+        }
+    }
+}
+
+suspend fun doSomething() {
+    throw Exception("Something went wrong")
+}
+
+
+
+
+A class is a blueprint or a template for creating objects, which define the properties and behavior of an entity. Objects are instances of a class and have their own state and behavior. In Kotlin, we can define a class using the keyword "class" followed by the class name, which can contain properties and methods.
+
+Example:
+
+class Person {
+    var name: String = ""
+    var age: Int = 0
+
+    fun greet() {
+        println("Hello, my name is $name and I am $age years old.")
+    }
+}
+Abstract class	Interface
+1) Abstract class can have abstract and non-abstract methods.	
+Interface can have only abstract methods. Since Java 8, it can have default and static methods also.
+2) Abstract class doesn't support multiple inheritance.	
+Interface supports multiple inheritance.
+3) Abstract class can have final, non-final, static and non-static variables.	
+Interface has only static and final variables.
+4) Abstract class can provide the implementation of interface.	
+Interface can't provide the implementation of abstract class.
+5) The abstract keyword is used to declare abstract class.	
+The interface keyword is used to declare interface.
+6) An abstract class can extend another Java class and implement multiple Java interfaces.	
+An interface can extend another Java interface only.
+7) An abstract class can be extended using keyword "extends".	
+An interface can be implemented using keyword "implements".
+
+
+Differences between Coroutines and Flow
+Coroutines and Flow are both used for handling asynchronous operations, but they have some differences:
+Coroutines are about managing asynchronous operations and can return a single value (like a regular function) or no value at all (like a Unit function).
+Flow, on the other hand, is about handling streams of values over time - it can emit any number of values (including zero).
+Flow is built on top of coroutines and provides operators like map, filter, transform, etc., that are familiar from other reactive streams APIs.
+Introduction to Kotlin Flow
+In Kotlin, the Flow is a type that can emit multiple values sequentially, as opposed to suspend functions which can return only a single value. The Flow API in Kotlin is a great way to handle streams of data asynchronously, especially when combined with coroutines.
+An enum (short for enumeration) is a type that represents a group of named constants. In Kotlin, you can declare an enum using the enum keyword.
+Sealed classes are used to represent restricted class hierarchies, where a value can have one of the types from a limited set. They are abstract by themselves, but they have subclasses which are not abstract. The subclasses can contain state and the instances of these subclasses are objects.
+Sealed classes are mainly used in when you have a fixed number of types that can inherit from the superclass.
+One advantage of sealed classes is that they are type-safe: the compiler verifies that every possible subtype is handled when a sealed class is used in a when expression.
+Extension functions in Kotlin allow you to "add" new functions to an existing class without modifying its source code. These functions are called as if they were methods of the class, but they are defined outside of it.
+Generics are a powerful feature that allows you to write code that is flexible and reusable. With generics, you can write a single class or function that works with different types, instead of having to write separate classes or functions for each type.
+class Box<T>(var content: T)
+In this example, Box is a generic class that can hold any type of content. T is the type parameter that represents the type of the content.
+Fetching data from a web API typically involves making a network request and then waiting for the response. With coroutines, we can write this kind of code in a sequential manner, without blocking the main thread.
+Assuming you have a function that makes a network request and returns a Deferred<Response>, you can call this function from a coroutine using the await() function
+import kotlinx.coroutines.*: This line imports the kotlinx.coroutines package, which contains all the necessary classes and functions for working with coroutines.
+suspend fun fetchFromDatabase(): String: This line defines a suspending function named fetchFromDatabase that returns a String. The suspend keyword means that this function can be paused and resumed at later stages, allowing other coroutines to run in the meantime.
+delay(1000L): This line simulates a delay of 1 second (1000 milliseconds) to mimic a long-running operation, like a database fetch.
+fun main() = runBlocking: This line starts the main function, which also starts a coroutine scope. runBlocking is a function that runs a new coroutine and blocks the current thread until its completion.
+val data = async { fetchFromDatabase() }: This line starts a new coroutine using the async function, which returns a Deferred<String>. fetchFromDatabase() is called within this coroutine.
+println("Fetching..."): This line simply prints "Fetching..." to the console.
+println("Data: ${data.await()}"): This line waits for the fetchFromDatabase() coroutine to finish using await() and then prints the result.
+Coroutines have several advantages over traditional threading:
+They are light-weight: You can launch thousands of coroutines, but creating the same amount of threads would consume significantly more resources.
+They are easier to read and write: Coroutines allow you to write asynchronous code in a sequential manner, which is easier to understand.
+They have built-in cancellation support.
+Coroutines are a feature of Kotlin that allows you to write asynchronous code in a sequential manner, making it easier to read and understand. A coroutine is basically a light-weight thread that doesn't block the main thread when doing long-running operations such as network requests or reading from a database. Coroutines can be launched in different contexts and with different dispatchers.
+In Kotlin, a class can inherit from another class using the : operator. The base class must be declared as open, because by default all classes in Kotlin are final:
+open class Vehicle {
+    open fun drive() {
+        println("Driving a vehicle")
+    }
+}
+class Car : Vehicle() {
+    override fun drive() {
+        println("Driving a car")
+    }
+}
+In this example, Car is a subclass of Vehicle, and it overrides the drive() method. Polymorphism allows a subclass to be treated as its superclass.
+An abstract class in Kotlin can contain both abstract methods (methods with no body) and non-abstract methods, as well as properties. It can store state. A class can only inherit from a single abstract class:
+abstract class Vehicle {
+    abstract fun drive()
+}
+class Car : Vehicle() {
+    override fun drive() {
+        println("Driving a car")
+    }
+}
+An interface in Kotlin can contain declarations of abstract methods as well as method implementations. It can't store state. A class can implement multiple interfaces:
+interface Drivable {
+    fun drive()
+}
+class Car : Drivable {
+    override fun drive() {
+        println("Driving a car")
+    }
+}
+In Kotlin, a data class is a class that is primarily used to hold data. A data class automatically defines equals(), hashCode(), and toString() methods, as well as a copy() method and component functions.
+To declare a data class, you use the data keyword:
+data class Person(val name: String, val age: Int)
+A lambda expression is a function that is not declared but passed immediately as an expression. A lambda expression is always surrounded by curly braces {}. The parameters (if any) are declared before the -> operator; the body of the function goes after the -> operator.
+Higher-order functions are functions that can take other functions as parameters or return a function.
+map is a higher-order function that applies a given function to each item in the collection and returns a new collection containing the results.
+val numbers = listOf(1, 2, 3)
+val squares = numbers.map { it * it }  // squares contains [1, 4, 9]
+filter is a higher-order function that filters items in a collection based on a given condition and returns a new collection containing only the items that satisfy the condition.
+val numbers = listOf(1, 2, 3, 4, 5)
+val evens = numbers.filter { it % 2 == 0 }  // evens contains [2, 4]
+In Kotlin, all collections are divided into two types: immutable (read-only) and mutable. Immutable collections (like listOf, setOf, mapOf) only provide read functions, such as size or get, while mutable collections (like mutableListOf, mutableSetOf, mutableMapOf) also provide functions to modify the collection, such as add, remove or clear.
+The Greatest Common Divisor (GCD) of two numbers can also be calculated using recursion. The Euclidean algorithm, an efficient method for computing the GCD, is based on the principle that the GCD of two numbers also divides their difference.
+Recursion is the process where a function calls itself as a subroutine. This allows the function to be repeated several times, as it can call itself during its execution.
+
